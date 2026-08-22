@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { safeNextPath } from "@/lib/accessSession";
+import LoginForm from "./LoginForm";
 import styles from "./login.module.css";
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ interface LoginPageProps {
 }
 
 const errorCopy: Record<string, string> = {
-  invalid: "Access denied. Enter the exact passcode; capitalization matters.",
+  invalid: "Access denied. Check the passcode shown in the field and try again.",
   rate: "Too many attempts. Access is temporarily locked.",
   config: "Secure access is not configured on this deployment.",
 };
@@ -38,24 +39,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         <h1 id="access-title">Welcome back, Chris.</h1>
         <p>Your private command center is locked.</p>
 
-        <form action="/api/auth/login" method="post" className={styles.form}>
-          <input type="hidden" name="next" value={next} />
-          <label htmlFor="varybrain-password">Access password</label>
-          <input
-            id="varybrain-password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            autoCapitalize="characters"
-            autoCorrect="off"
-            spellCheck={false}
-            autoFocus
-            required
-            maxLength={256}
-          />
-          {error && <p className={styles.error} role="alert">{error}</p>}
-          <button type="submit">Unlock VaryBrain</button>
-        </form>
+        <LoginForm next={next} error={error} />
 
         <div className={styles.security}>
           <span><i />Encrypted session</span>

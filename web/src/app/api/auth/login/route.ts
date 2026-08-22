@@ -90,10 +90,11 @@ export async function POST(request: Request) {
     return failureResponse(request, next, 400, "Unable to authenticate.", wantsJson);
   }
 
-  // Copying a passcode from a message can add an invisible leading or trailing
-  // space. Ignore only that accidental whitespace; the password itself remains
-  // case-sensitive and otherwise exact.
-  password = password.trim();
+  // A short passcode is often copied or dictated. Keep an exact candidate, then
+  // allow a second candidate with whitespace removed and letters uppercased.
+  // Future mixed-case passwords still work through the exact candidate.
+  const exactPassword = password.trim();
+  const normalizedPassword = exactPassword.replace(/\s+/g, "").toUpperCase();
 
   const passwordHash = process.env.JARVIS_GATE_PASSWORD_HASH;
   const sessionSecret = process.env.JARVIS_SESSION_SECRET;
@@ -107,7 +108,12 @@ export async function POST(request: Request) {
     return failureResponse(request, next, 429, "Too many attempts. Try again later.", wantsJson);
   }
 
-  const valid = password.length <= 256 && await passwordMatches(password, passwordHash);
+  const exactMatch = exactPassword.length <= 256
+    && await passwordMatches(exactPassword, passwordHash);
+  const normalizedMatch = normalizedPassword !== exactPassword
+    && normalizedPassword.length <= 256
+    && await passwordMatches(normalizedPassword, passwordHash);
+  const valid = exactMatch || normalizedMatch;
   if (!valid) {
     recordFailure(ip, now);
     return failureResponse(request, next, 401, "Unable to authenticate.", wantsJson);

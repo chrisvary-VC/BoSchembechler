@@ -1,0 +1,35 @@
+{
+  "title": "Daily Brief · Thursday",
+  "spoken": "Brief's up. Three things want you today, and the Northwind renewal is the loud one.",
+  "summary": "Channel had its best week of the quarter, the Northwind renewal went quiet, and you have a keynote draft due Friday.",
+  "signals": [
+    { "label": "Subscribers", "value": "48.2K", "delta": "+12.4%" },
+    { "label": "Watch time", "value": "31.7K hrs", "delta": "+8.1%" },
+    { "label": "Pipeline", "value": "$412K", "delta": "-3.0%" },
+    { "label": "Northwind", "value": "9 days quiet", "delta": "at risk", "alert": true }
+  ],
+  "sections": [
+    {
+      "heading": "Needs you today",
+      "lines": [
+        "Northwind renewal — no reply since the 11th. Ping Dana Reyes.",
+        "Keynote draft due Friday; outline exists, slides do not.",
+        "Two editor applicants waiting on a yes or no."
+      ]
+    },
+    {
+      "heading": "Going well",
+      "lines": [
+        "The 'Studio Rebuild' video is pacing 2.3x your median.",
+        "Retention past the 30-second mark is up four points."
+      ]
+    },
+    {
+      "heading": "Background",
+      "lines": [
+        "Q3 sponsor invoices all cleared.",
+        "Storage array back under 70% after the archive pass."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Today · ranked",
+  "items": [
+    { "rank": 1, "title": "Re-open Northwind with a new champion", "why": "9 days quiet and $84K in negotiation. Dana flagged procurement.", "effort": "20 min" },
+    { "rank": 2, "title": "Outline the Friday keynote into slides", "why": "Due in 36 hours; only the outline exists.", "effort": "90 min" },
+    { "rank": 3, "title": "Answer the two editor applicants", "why": "Both waiting since Monday. One has another offer.", "effort": "15 min" },
+    { "rank": 4, "title": "Hold the line on Cedar & Vale pricing", "why": "20% ask is unjustified; a counter at 8% keeps it alive.", "effort": "10 min" },
+    { "rank": 5, "title": "Ship the cold-open template to the team", "why": "It is what moved retention four points. Make it repeatable.", "effort": "30 min" }
+  ]
+}

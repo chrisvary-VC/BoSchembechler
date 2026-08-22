@@ -1,0 +1,23 @@
+{
+  "title": "Pipeline · Q3",
+  "stages": [
+    { "name": "Discovery", "count": 6, "value": 96000 },
+    { "name": "Proposal", "count": 4, "value": 138000 },
+    { "name": "Negotiation", "count": 3, "value": 124000 },
+    { "name": "Closing", "count": 2, "value": 54000 }
+  ],
+  "deals": [
+    { "name": "Northwind Renewal", "stage": "Negotiation", "value": 84000, "at_risk": true,
+      "note": "No reply in 9 days. Champion changed roles." },
+    { "name": "Halcyon Media Series", "stage": "Proposal", "value": 62000, "at_risk": false,
+      "note": "Legal has the SOW. Expect signature Monday." },
+    { "name": "Brightfold Studios", "stage": "Closing", "value": 38000, "at_risk": false,
+      "note": "Verbal yes. Waiting on the PO number." },
+    { "name": "Cedar & Vale", "stage": "Negotiation", "value": 40000, "at_risk": true,
+      "note": "Pushing for a 20% discount they cannot justify." },
+    { "name": "Ashgrove Labs", "stage": "Discovery", "value": 26000, "at_risk": false,
+      "note": "Second call booked for Tuesday." },
+    { "name": "Pinemark Group", "stage": "Proposal", "value": 45000, "at_risk": false,
+      "note": "Budget confirmed for next fiscal." }
+  ]
+}

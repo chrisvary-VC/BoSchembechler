@@ -1,0 +1,22 @@
+{
+  "items": [
+    { "when": "Tue, 2:10pm", "source": "Meeting · Northwind QBR", "who": "Dana Reyes",
+      "quote": "We love the work, but renewal has to clear the new procurement review.",
+      "tags": ["northwind", "renewal", "procurement"] },
+    { "when": "Tue, 4:48pm", "source": "Slack · #accounts", "who": "Marcus Hale",
+      "quote": "Northwind's champion moved to the platform team. We need a new one.",
+      "tags": ["northwind", "renewal"] },
+    { "when": "Mon, 9:32am", "source": "Email · Halcyon Media", "who": "Priya Anand",
+      "quote": "SOW looks right. Sending to legal today, should be quick.",
+      "tags": ["halcyon", "proposal", "legal"] },
+    { "when": "Fri, 11:05am", "source": "Meeting · Content review", "who": "Jo Whitaker",
+      "quote": "The cold open rewrite is what moved retention, not the thumbnail.",
+      "tags": ["retention", "content", "youtube"] },
+    { "when": "Thu, 3:20pm", "source": "Slack · #studio", "who": "Eli Kwan",
+      "quote": "Archive pass is done, we're back under seventy percent on the array.",
+      "tags": ["studio", "storage"] },
+    { "when": "Wed, 8:15am", "source": "Email · Cedar & Vale", "who": "Tomas Lind",
+      "quote": "If the number doesn't move we'll have to revisit next quarter.",
+      "tags": ["cedar", "discount", "negotiation"] }
+  ]
+}

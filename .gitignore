@@ -12,6 +12,7 @@ node_modules/
 .next*/
 dist/
 build/
+.runtime/
 .pytest_cache/
 .coverage
 *.log

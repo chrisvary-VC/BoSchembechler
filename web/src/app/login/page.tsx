@@ -12,7 +12,7 @@ interface LoginPageProps {
 }
 
 const errorCopy: Record<string, string> = {
-  invalid: "Access denied. Check the passcode and try again.",
+  invalid: "Access denied. Enter the exact passcode; capitalization matters.",
   rate: "Too many attempts. Access is temporarily locked.",
   config: "Secure access is not configured on this deployment.",
 };
@@ -46,6 +46,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             name="password"
             type="password"
             autoComplete="current-password"
+            autoCapitalize="characters"
+            autoCorrect="off"
+            spellCheck={false}
             autoFocus
             required
             maxLength={256}

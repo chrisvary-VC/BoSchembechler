@@ -90,6 +90,11 @@ export async function POST(request: Request) {
     return failureResponse(request, next, 400, "Unable to authenticate.", wantsJson);
   }
 
+  // Copying a passcode from a message can add an invisible leading or trailing
+  // space. Ignore only that accidental whitespace; the password itself remains
+  // case-sensitive and otherwise exact.
+  password = password.trim();
+
   const passwordHash = process.env.JARVIS_GATE_PASSWORD_HASH;
   const sessionSecret = process.env.JARVIS_SESSION_SECRET;
   if (!passwordHash || !sessionSecret) {

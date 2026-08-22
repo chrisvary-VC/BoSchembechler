@@ -78,12 +78,13 @@ export async function POST(request: Request) {
   let next = "/";
   try {
     if (wantsJson) {
-      const body = await request.json() as { password?: unknown; next?: unknown };
-      password = typeof body.password === "string" ? body.password : "";
+      const body = await request.json() as { accessCode?: unknown; password?: unknown; next?: unknown };
+      const suppliedCode = body.accessCode ?? body.password;
+      password = typeof suppliedCode === "string" ? suppliedCode : "";
       next = safeNextPath(typeof body.next === "string" ? body.next : "/");
     } else {
       const body = await request.formData();
-      password = String(body.get("password") || "");
+      password = String(body.get("accessCode") || body.get("password") || "");
       next = safeNextPath(String(body.get("next") || "/"));
     }
   } catch {
@@ -94,7 +95,7 @@ export async function POST(request: Request) {
   // allow a second candidate with whitespace removed and letters uppercased.
   // Future mixed-case passwords still work through the exact candidate.
   const exactPassword = password.trim();
-  const normalizedPassword = exactPassword.replace(/\s+/g, "").toUpperCase();
+  const normalizedPassword = exactPassword.replace(/[^a-z0-9]/gi, "").toUpperCase();
 
   const passwordHash = process.env.JARVIS_GATE_PASSWORD_HASH;
   const sessionSecret = process.env.JARVIS_SESSION_SECRET;

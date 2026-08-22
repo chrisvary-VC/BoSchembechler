@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import styles from "./login.module.css";
 
 interface LoginFormProps {
@@ -9,18 +9,49 @@ interface LoginFormProps {
 }
 
 export default function LoginForm({ next, error }: LoginFormProps) {
-  const [showPassword, setShowPassword] = useState(false);
+  const [accessCode, setAccessCode] = useState("");
+  const [showPassword, setShowPassword] = useState(true);
+  const [feedback, setFeedback] = useState(error);
+  const [submitting, setSubmitting] = useState(false);
+
+  async function unlock(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFeedback("");
+    setSubmitting(true);
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        credentials: "same-origin",
+        cache: "no-store",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accessCode, next }),
+      });
+      const result = await response.json() as { error?: string; next?: string };
+      if (!response.ok) {
+        setFeedback(result.error || "Unable to unlock VaryBrain.");
+        return;
+      }
+      window.location.assign(result.next || next);
+    } catch {
+      setFeedback("The secure console could not be reached. Try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
-    <form action="/api/auth/login" method="post" className={styles.form}>
+    <form action="/api/auth/login" method="post" className={styles.form} onSubmit={unlock} aria-busy={submitting}>
       <input type="hidden" name="next" value={next} />
-      <label htmlFor="varybrain-password">Access password</label>
+      <label htmlFor="varybrain-password">Access passcode</label>
       <div className={styles.passwordField}>
         <input
           id="varybrain-password"
-          name="password"
+          name="accessCode"
           type={showPassword ? "text" : "password"}
-          autoComplete="current-password"
+          value={accessCode}
+          onChange={(event) => setAccessCode(event.target.value)}
+          autoComplete="off"
           autoCapitalize="none"
           autoCorrect="off"
           spellCheck={false}
@@ -37,8 +68,10 @@ export default function LoginForm({ next, error }: LoginFormProps) {
           {showPassword ? "Hide" : "Show"}
         </button>
       </div>
-      {error && <p className={styles.error} role="alert">{error}</p>}
-      <button className={styles.unlockButton} type="submit">Unlock VaryBrain</button>
+      {feedback && <p className={styles.error} role="alert">{feedback}</p>}
+      <button className={styles.unlockButton} type="submit" disabled={submitting}>
+        {submitting ? "Unlocking…" : "Unlock VaryBrain"}
+      </button>
     </form>
   );
 }

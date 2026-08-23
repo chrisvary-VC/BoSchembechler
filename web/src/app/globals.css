@@ -488,6 +488,25 @@ body::before {
 .core-readout { position: absolute; left: 18px; top: 16px; display: grid; gap: 5px; z-index: 3; }
 .core-readout span { color: var(--text-dim); font-size: .62rem; letter-spacing: .17em; }
 .core-readout strong { color: var(--accent); font-size: .72rem; letter-spacing: .10em; }
+.core-voice-alert {
+  position: absolute;
+  z-index: 6;
+  top: 16px;
+  right: 16px;
+  width: min(310px, 42%);
+  display: grid;
+  gap: 5px;
+  padding: 9px 11px;
+  border: 1px solid rgba(255, 99, 117, .52);
+  background: rgba(0, 11, 22, .9);
+  box-shadow: inset 3px 0 0 rgba(255, 99, 117, .72);
+  color: var(--text-dim);
+  font: .62rem/1.35 var(--mono);
+}
+.core-voice-alert strong { color: var(--danger); letter-spacing: .1em; text-transform: uppercase; }
+.core-voice-alert a { width: max-content; color: var(--accent); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.core-voice-alert a:hover,
+.core-voice-alert a:focus-visible { color: #ffe36e; outline: 2px solid #ffe36e; outline-offset: 2px; }
 .core-status { position: absolute; bottom: 48px; margin: 0; color: var(--accent); font-size: .68rem; letter-spacing: .18em; z-index: 4; }
 .command-core { width: min(29vh, 230px); height: min(29vh, 230px); margin: 0; z-index: 2; }
 .command-core .arc-one { border-top-color: rgba(255, 203, 5, .72); border-right-color: rgba(47, 101, 167, .45); animation-duration: 18s; }
@@ -935,6 +954,7 @@ body::before {
   .mobile-command-controls .privacy-toggle,
   .mobile-command-controls .module-deck-btn,
   .mobile-command-controls .lock-console button { padding-inline: 7px; font-size: .57rem; }
+  .core-voice-alert { top: auto; right: 10px; bottom: 10px; left: 10px; width: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {

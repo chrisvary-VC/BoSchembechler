@@ -19,7 +19,7 @@ import MetricsPanel from "./panels/MetricsPanel";
 import PipelinePanel from "./panels/PipelinePanel";
 import IntelPanel from "./panels/IntelPanel";
 import ActionsPanel from "./panels/ActionsPanel";
-import VictorsReactor, { type VictorsReactorState } from "./VictorsReactor";
+import VoiceMascot, { type VoiceMascotState } from "./VoiceMascot";
 import DashboardDock from "./DashboardDock";
 import ConversationModule from "./ConversationModule";
 import DashboardMissionDeck from "./DashboardMissionDeck";
@@ -144,13 +144,19 @@ export default function HudStage({ onEngage, engaging, voiceRequested, voiceErro
         <section className="command-main">
           <div className="core-zone">
             <div className="core-readout"><span>ACTIVE MODULE</span><strong>{moduleName}</strong></div>
-            <VictorsReactor
+            <VoiceMascot
               state={reactorState(voice.state, Boolean(visibleEvent))}
               amplitude={voice.level}
               bands={voice.bands}
-              activeTool={visibleEvent ? moduleName : undefined}
-              statusLabel={coreStatus(voice.state, Boolean(visibleEvent))}
+              label={coreStatus(voice.state, Boolean(visibleEvent))}
             />
+            {voiceError && (
+              <aside className="core-voice-alert" role="alert">
+                <strong>Voice link unavailable</strong>
+                <span>{voiceError}</span>
+                {voiceError.includes("127.0.0.1:4310") && <a href="http://127.0.0.1:4310">Open local voice console</a>}
+              </aside>
+            )}
           </div>
 
           <section className={`active-display${visibleEvent ? " has-event" : ""}`}>
@@ -338,7 +344,7 @@ function coreStatus(state: string, hasEvent: boolean) {
   }
 }
 
-function reactorState(state: string, hasEvent: boolean): VictorsReactorState {
+function reactorState(state: string, hasEvent: boolean): VoiceMascotState {
   switch (state) {
     case "speaking": return "speaking";
     case "thinking": return "thinking";

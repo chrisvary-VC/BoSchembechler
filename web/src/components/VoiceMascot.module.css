@@ -1,0 +1,276 @@
+.mascot {
+  --mascot-navy: #00274c;
+  --mascot-deep: #000d1b;
+  --mascot-maize: #ffcb05;
+  --mascot-blue: #7aa7d9;
+  --mascot-danger: #ff6375;
+  width: min(100%, 25rem);
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+  color: #eef5fb;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 203, 5, calc(0.04 + var(--mascot-energy) * 0.12)) 0 13%, transparent 42%),
+    repeating-radial-gradient(circle, transparent 0 13%, rgba(122, 167, 217, 0.08) 13.2% 13.5%, transparent 13.7% 21%),
+    var(--mascot-deep);
+  box-shadow:
+    inset 0 0 4rem rgba(0, 39, 76, 0.75),
+    0 0 calc(0.9rem + var(--mascot-energy) * 2.3rem) rgba(255, 203, 5, calc(0.08 + var(--mascot-energy) * 0.2));
+}
+
+.crosshair {
+  position: absolute;
+  inset: 4%;
+  pointer-events: none;
+}
+
+.crosshair::before,
+.crosshair::after {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(122, 167, 217, 0.34), transparent);
+}
+
+.crosshair::after {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(transparent, rgba(122, 167, 217, 0.26), transparent);
+}
+
+.orbit {
+  position: absolute;
+  border: 1px solid rgba(122, 167, 217, 0.24);
+  border-top-color: rgba(255, 203, 5, 0.75);
+  border-bottom-color: rgba(255, 203, 5, 0.2);
+  border-radius: 50%;
+  animation: mascotOrbit 18s linear infinite;
+}
+
+.orbitOuter { inset: 3.5%; }
+.orbitInner {
+  inset: 10%;
+  border-style: dashed;
+  animation-direction: reverse;
+  animation-duration: 12s;
+}
+
+.portrait {
+  position: absolute;
+  inset: 13%;
+  z-index: 2;
+  filter: drop-shadow(0 0 calc(0.5rem + var(--mascot-energy) * 1.2rem) rgba(255, 203, 5, 0.34));
+  transform: scale(calc(0.96 + var(--mascot-energy) * 0.025));
+  transition: filter 70ms linear, transform 70ms linear;
+}
+
+.face,
+.jaw {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.eye {
+  position: absolute;
+  z-index: 4;
+  width: 7.2%;
+  aspect-ratio: 1.45;
+  overflow: visible;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  transform: rotate(var(--eye-rotation)) scaleY(calc(0.66 + var(--eye-energy) * 0.34));
+  transform-origin: center;
+  transition: transform 55ms linear;
+}
+
+.eye::after {
+  position: absolute;
+  z-index: 2;
+  content: "";
+  inset: -45% -42%;
+  border-bottom: 2px solid var(--mascot-navy);
+  border-radius: 50%;
+  background: var(--mascot-maize);
+  opacity: 0;
+  transform: scaleY(0.1);
+  animation: mascotBlink 6.2s ease-in-out infinite;
+}
+
+.eye i {
+  position: absolute;
+  left: calc(22% + var(--mascot-gaze) * 56%);
+  top: 50%;
+  width: 58%;
+  aspect-ratio: 1;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  background: var(--mascot-navy);
+  box-shadow: 0 0 calc(0.12rem + var(--eye-energy) * 0.45rem) rgba(255, 203, 5, 0.9);
+  transform: translate(-50%, -50%) scale(calc(0.82 + var(--eye-energy) * 0.36));
+  transition: left 70ms linear, transform 55ms linear;
+}
+
+.eyeLeft {
+  --eye-energy: var(--mascot-eye-left);
+  --eye-rotation: -14deg;
+  left: 35.2%;
+  top: 53.4%;
+}
+
+.eyeRight {
+  --eye-energy: var(--mascot-eye-right);
+  --eye-rotation: 12deg;
+  right: 13.4%;
+  top: 54.4%;
+}
+
+.mouthGap {
+  position: absolute;
+  z-index: 3;
+  left: 51%;
+  top: 72.5%;
+  width: 35%;
+  height: 8.5%;
+  overflow: hidden;
+  border-radius: 45% 55% 55% 45%;
+  background: linear-gradient(180deg, #00050a, var(--mascot-navy));
+  box-shadow: inset 0 0.2rem 0.5rem #000, 0 0 calc(var(--mascot-mouth) * 0.7rem) rgba(255, 203, 5, 0.46);
+  opacity: var(--mascot-mouth);
+  transform: rotate(5deg) scaleY(calc(0.08 + var(--mascot-mouth) * 2.1));
+  transform-origin: center top;
+  transition: opacity 45ms linear, transform 45ms linear;
+}
+
+.mouthGap::after {
+  position: absolute;
+  content: "";
+  left: 34%;
+  right: 8%;
+  bottom: -8%;
+  height: 32%;
+  border-radius: 50% 50% 20% 20%;
+  background: var(--mascot-maize);
+  opacity: calc(var(--mascot-mouth) * 0.82);
+}
+
+.jawMask {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  clip-path: polygon(43% 68%, 91% 64%, 96% 92%, 40% 94%);
+  transform: translateY(calc(var(--mascot-mouth) * 1rem));
+  transform-origin: 70% 69%;
+  transition: transform 45ms linear;
+}
+
+.jaw { transform: rotate(calc(var(--mascot-mouth) * 2deg)); transform-origin: 70% 69%; }
+
+.meters {
+  position: absolute;
+  z-index: 6;
+  left: 18%;
+  right: 18%;
+  bottom: 8%;
+  height: 9%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2.2%;
+  opacity: calc(0.3 + var(--mascot-energy) * 0.7);
+}
+
+.meters i {
+  width: 2.5%;
+  height: calc(12% + var(--meter-level) * 88%);
+  min-height: 2px;
+  background: linear-gradient(var(--mascot-maize), var(--mascot-blue));
+  box-shadow: 0 0 calc(var(--meter-level) * 0.55rem) rgba(255, 203, 5, 0.7);
+  transition: height 48ms linear;
+}
+
+.caption {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #91a8bb;
+  font-size: 0.66rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.caption > i {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--mascot-blue);
+  box-shadow: 0 0 0.45rem currentColor;
+}
+
+.mascot[data-state="idle"] .portrait { animation: mascotBreathe 6.4s ease-in-out infinite; }
+.mascot[data-state="listening"] .portrait { transform: translateY(2px) scale(calc(.98 + var(--mascot-energy) * .025)); }
+.mascot[data-state="thinking"] .portrait,
+.mascot[data-state="tool-running"] .portrait { transform: rotate(-1.2deg) scale(calc(.97 + var(--mascot-energy) * .025)); }
+.mascot[data-state="success"] .portrait { animation: mascotNod 480ms ease-out 1; }
+.mascot[data-state="error"] .portrait { transform: translateY(3px) rotate(-1deg) scale(.96); }
+.mascot[data-state="speaking"] .caption,
+.mascot[data-state="success"] .caption { color: var(--mascot-maize); }
+.mascot[data-state="speaking"] .caption > i,
+.mascot[data-state="success"] .caption > i { color: var(--mascot-maize); background: var(--mascot-maize); }
+.mascot[data-state="listening"] .caption { color: #00b2a9; }
+.mascot[data-state="listening"] .caption > i { color: #00b2a9; background: #00b2a9; }
+.mascot[data-state="alert"] .caption,
+.mascot[data-state="error"] .caption { color: var(--mascot-danger); }
+.mascot[data-state="alert"] .caption > i,
+.mascot[data-state="error"] .caption > i { color: var(--mascot-danger); background: var(--mascot-danger); }
+.mascot[data-state="offline"] { filter: saturate(0.38); opacity: 0.66; }
+.mascot[data-state="offline"] .orbit { animation-play-state: paused; }
+
+@keyframes mascotOrbit { to { transform: rotate(360deg); } }
+@keyframes mascotBlink {
+  0%, 44%, 47.5%, 100% { opacity: 0; transform: scaleY(0.1); }
+  45.1%, 46.3% { opacity: 1; transform: scaleY(1); }
+}
+@keyframes mascotBreathe { 0%, 100% { transform: translateY(1px) rotate(-.35deg) scale(.96); } 50% { transform: translateY(-2px) rotate(.35deg) scale(.97); } }
+@keyframes mascotNod { 0%, 100% { transform: translateY(0) rotate(0) scale(.96); } 48% { transform: translateY(4px) rotate(1.2deg) scale(.97); } }
+
+@media (max-width: 720px) {
+  .mascot { width: min(100%, 19rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit,
+  .portrait,
+  .eye::after { animation: none; }
+  .portrait,
+  .eye,
+  .eye i,
+  .mouthGap,
+  .jawMask,
+  .meters i { transition: none; }
+  .mouthGap { transform: rotate(5deg) scaleY(.08); }
+  .mascot[data-state="speaking"] .mouthGap { opacity: .9; transform: rotate(5deg) scaleY(.72); }
+  .jawMask { transform: none; }
+  .mascot[data-state="speaking"] .jawMask { transform: translateY(4px); }
+}

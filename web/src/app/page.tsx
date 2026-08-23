@@ -13,6 +13,12 @@ export default function Page() {
     setConnecting(true);
     setError(null);
     try {
+      const voiceUrl = process.env.NEXT_PUBLIC_LIVEKIT_URL || "";
+      const pageIsLocal = isLoopback(window.location.hostname);
+      const voiceIsLocal = localEndpoint(voiceUrl);
+      if (!pageIsLocal && voiceIsLocal) {
+        throw new Error("Remote voice needs a secure LiveKit Cloud connection. Voice is available now at http://127.0.0.1:4310 on the Jarvis Mac.");
+      }
       const roomBase = process.env.NEXT_PUBLIC_AIOS_ROOM || "aios";
       const room = `${roomBase}-${Date.now().toString(36)}`;
       const res = await fetch(`/api/token?room=${encodeURIComponent(room)}`);
@@ -72,4 +78,17 @@ export default function Page() {
       />
     </LiveKitRoom>
   );
+}
+
+function isLoopback(hostname: string) {
+  return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "[::1]";
+}
+
+function localEndpoint(value: string) {
+  if (!value) return false;
+  try {
+    return isLoopback(new URL(value).hostname);
+  } catch {
+    return false;
+  }
 }
